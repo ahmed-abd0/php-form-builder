@@ -2,11 +2,12 @@
 
 namespace builder;
 
+use function PHPSTORM_META\type;
+
 interface FormBuilder{
 
     
-    public static function form();
-    public function start(array $attrs);
+    public static function start(array $attrs);
     public  function addF(array $attrs);
     public  function addTA(array $attrs);
     public  function endf();
@@ -36,50 +37,26 @@ class Form implements FormBuilder{
     private static $instance = null;
 
     private function __construct(){}
-   
-   
-    public static function form(){
 
+    public static function start(array $attrs = []){
         if(self::$instance  == null){
             self::$instance   = new Form();
         }
-        return self::$instance;
+        return self::$instance->addFirst($attrs);
     }
 
     
-    public function start(array $attrs = []){
+    private function addFirst(array $attrs = []){
         $this->product = new Product();
         $this->product->Add('<form ');
-
-        if(!empty($attrs))
-        {
-            foreach ($attrs as $key=>$value)
-            {
-                $this->product->Add("$key = '$value'");
-            }
-
-        }
-
-        $this->product->Add('>');
-
+        $this->setAttrs($attrs);
         return $this;
     }
 
 
     public   function addF(array $attrs = []){
         $this->product->Add('<input ');
-
-        if(!empty($attrs))
-        {
-            foreach ($attrs as $key=>$value)
-            {
-                $this->product->Add("$key = '$value'");
-            }
-
-        }
-
-        $this->product->Add('>');
-
+        $this->setAttrs($attrs);
         return $this;
         
     }
@@ -87,40 +64,14 @@ class Form implements FormBuilder{
 
     public   function addTA(array $attrs = []){
         $this->product ->Add('<textarea ');
-
-        if(!empty($attrs))
-        {
-            foreach ($attrs as $key=>$value)
-            {
-                if($key != 'value'){
-                $this->product->Add("$key = '$value'");
-                }
-            }
-
-        }
-
-        if (isset($attrs['value'])){ $this->product->Add('>'. $attrs['value'].'</textarea>'); }
-        else{$this->product->Add('></textarea>'); }
-
+        $this->setAttrs($attrs,'textarea');
         return $this;
     
     }
 
     public function addlabel(array $attrs){
         $this->product->Add('<label ');
-
-        if(!empty($attrs))
-        {
-            foreach ($attrs as $key=>$value)
-            {
-                $this->product->Add("$key = '$value'");
-            }
-
-        }
-
-        if (isset($attrs['value'])){ $this->product->Add('>'. $attrs['value'].'</label>'); }
-        else{$this->product->Add('></label>'); }
-
+        $this->setAttrs($attrs, 'label');
         return $this;
     }
 
@@ -134,11 +85,30 @@ class Form implements FormBuilder{
         return $this;
     }
 
+    private function setAttrs($attrs, $type='input'){
 
+        if ($type === 'input'){
+            foreach ($attrs as $key=>$value){$this->product->Add("$key = '$value'");}
+            $this->product->Add('>');
+        }else{
+          
+            foreach ($attrs as $key=>$value){
+                if($key === 'value'){continue;}
+                $this->product->Add("$key = '$value'");
+            }
+
+            if (isset($attrs['value'])){ $this->product->Add('>'. $attrs['value']."</$type>"); }
+            else{ $this->product->Add("></$type>"); }
+          
+        }
+        
+
+    }
     public  function get(){
         return $this->product->getProduct();
     }
-    
+
+
 }
 
 
