@@ -1,41 +1,18 @@
 <?php
 
-namespace builder;
+namespace Src;
+require_once('Product.php');
+require_once('FormBuilderInterface.php');
 
-
-interface IFormBuilder{
-
-    public function addFirst(array $attrs);
-    public  function addF(array $attrs);
-    public  function addTA(array $attrs);
-    public function addlabel(array $attrs);
-    public function decore(string $value);
-    public  function get();
-
-}
-
-class Product{
-    private array $List = [];
-
-    public function Add(String $item){
-        $this->List[] = $item;        
-    }
-
-    public function getProduct(){
-        return join($this->List);    
-    }
-
-}
-
-
-class FormBuilder implements IFormBuilder{
+class FormBuilderClass implements IFormBuilder{
     private Product $product ;
     public function __construct()
     {
         $this->product = new Product;
     }
 
-    public function addFirst(array $attrs = []){
+   
+    public function form(array $attrs = []){
         $this->product->Add('<form ');
         $this->setAttrs($attrs);
         $this->endTag();
@@ -43,7 +20,7 @@ class FormBuilder implements IFormBuilder{
     }
 
 
-    public function addF(array $attrs = []){
+    public function input(array $attrs = []){
         $this->product->Add('<input ');
         $this->setAttrs($attrs);
         $this->endTag();
@@ -52,7 +29,7 @@ class FormBuilder implements IFormBuilder{
     }
 
 
-    public function addTA(array $attrs = []){
+    public function textarea(array $attrs = []){
         $this->product ->Add('<textarea ');
         $this->setAttrs($attrs,'textarea');
         $this->endTag('textarea', $attrs['value'] ?? '');
@@ -60,50 +37,59 @@ class FormBuilder implements IFormBuilder{
     
     }
 
-    public function addlabel(array $attrs = []){
+    public function select(array $attrs = [], array $options = []){
+        $this->product->Add('<select ');
+        $this->setAttrs($attrs,'select');
+        $this->endTag();
+        $this->setOptions($options, $attrs['value'] ?? '');
+        $this->endTag('select');
+
+        return $this;
+    }
+
+    public function label(array $attrs = []){
         $this->product->Add('<label ');
         $this->setAttrs($attrs, 'label');
         $this->endTag('label', $attrs['value'] ?? '');
         return $this;
     }
 
-    public function decore($value){
+    public function html($value){
         $this->product->Add($value);
         return $this;
     }
        
-    public  function get(){
+    public function endForm(){
         $this->product->Add('</form>');
+        return $this;
+    }
+    public  function get(){
         return $this->product->getProduct();
     }
     
+ 
 
-    private function setAttrs($attrs, $type='input'){
+    private function setAttrs($attrs, $type= null){
 
-        if ($type === 'input')
+        if (!$type)
         {
             foreach ($attrs as $key=>$value)
             {
                 if($key === 'single')
                     continue;
-                    $this->product->Add("$key = '$value'");   
+                $this->product->Add(" $key = '$value' "); 
             }
         }
-        else
+        if($type)
         {
-          
-            foreach ($attrs as $key=>$value){
-                
+            foreach ($attrs as $key=>$value){       
                 if($key === 'value')
                     continue;
                 
                 if($key === 'single')
                     continue;
-                
-                    $this->product->Add("$key = '$value'"); 
+                $this->product->Add(" $key = '$value' "); 
             }
-
-        
         }
 
         if(array_key_exists('single', $attrs)){
@@ -116,15 +102,30 @@ class FormBuilder implements IFormBuilder{
 
     }
 
-    private function endTag($type = null, $value=''){
+    private function setOptions(array $options ,string $value)
+    {
+        $selected = '';
+        foreach ($options as $key=>$option){
+            if($key == $value)
+                $selected = 'selected';
+            $this->product->Add("<option $selected value = '$key' >$option</option>");
+            $selected = '';
+        }
+    }
+
+    private function endTag($type = null, $value = ''){
 
         if(!$type)
             $this->product->Add('>');
         
-        if($type)
+        if($type == 'select')
+            $this->product->Add('</select>');
+
+        if($type != 'select' && $type)
             $this->product->Add(">$value</$type>");
       
     }
 }
+
 
 
