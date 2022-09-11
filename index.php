@@ -6,26 +6,37 @@ require_once('forms/regiseter.php');
 require_once('forms/testForm.php');
 require_once('layout/header.html');
 
-use builder\FormBuilder;
-use login\Login;
-use register\Register;
-use test\testForm;
+use Forms\Login;
+use Forms\Register;
+use Forms\testForm;
+use src\FormBuilder;
 
 echo <<<eof
   <div class='container' style='text-align:center;width: 600px ;margin-top:100px ;'>
-  <h3> login </h3>
 eof;
+
+echo '<h3>Login</h3>';
+
+    $login = Login::create();
+   
+    echo $login;
   
-    $form = Login::make(new FormBuilder);
-    $test = testForm::make(new FormBuilder);
-    echo $form;
-    echo $test;
     echo '<hr><br>';
     echo '<h3>register</h3>';
 
-    $formReg = Register::make(new FormBuilder);
-    
-    echo $formReg;   
+    $register = Register::create();
+
+    echo $register;
+
+    echo '<h3>Form</h3>';
+
+    echo testForm::create();
+    echo '<br> <h3>Model</h3>';
+
+    $model = ['select' => 'key3' , 'text' => 'this textarea', 'check' => 'ahmed', 'radio' => 'ahmed'];
+
+    echo testForm::create()->model($model, 'model.php');
+
 
 echo '</div>';
 

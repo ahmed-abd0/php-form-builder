@@ -1,20 +1,22 @@
 <?php
-namespace login;
+namespace Forms;
 
-require_once('src/builder.php');
-require_once('src/BuilderDirectory.php');
-use builder\FormBuilder;
-use BuilderDir\FormBuilderDir;
+use Src\FormBuilder;
+use Src\FormComponent;
 
-class Login extends FormBuilderDir {
+require_once ('src/Facade.php');
+require_once('src/FormComponent.php');
+
+class Login extends FormComponent {
    
-    public function Form($action='login.php') : string{
-        return  $this->formBuilder->addFirst(['method' => 'post' , 'action' => $action])
-        ->addF(['type' => 'text','id'=>'username','name' => 'username', 'class' => 'form-control','placeholder' => 'User Name'])
-        ->decore('<br>')
-        ->addF(['type' => 'password' , 'name' => 'password' , 'class' => 'form-control', 'placeholder' => 'Password'])
-        ->decore('<br>')
-        ->addF(['type' => 'submit', 'value'=>'login', 'class' => 'btn btn-primary'])->get();
+    public function Form(){
+        return  FormBuilder::form(['method' => 'post' , 'action' => 'login.php'])
+                ->input(['type' => 'text','id'=>'username','name' => 'username', 'class' => 'form-control','placeholder' => 'User Name'])
+                ->html('<br>')
+                ->input(['type' => 'password' , 'name' => 'password' , 'class' => 'form-control', 'placeholder' => 'Password'])
+                ->html('<br>')
+                ->input(['type' => 'submit', 'value'=>'login', 'class' => 'btn btn-primary'])
+                ->endForm();
     }
 
    

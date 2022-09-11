@@ -1,18 +1,24 @@
 <?php
-namespace test;
+namespace Forms;
 
-require_once('src/builder.php');
-require_once('src/BuilderDirectory.php');
-use BuilderDir\FormBuilderDir;
+use Src\FormBuilder;
+use Src\FormComponent;
 
-class testForm extends FormBuilderDir {
+require_once ('src/Facade.php');
+require_once('src/FormComponent.php');
+
+class testForm extends FormComponent {
    
-    public function Form($action='login.php') : string{
-        return $this->formBuilder
-                    ->addFirst()
-                    ->addF(['class' => 'form-control', 'type' => 'file' , 'single' => ['disabled'] ])
-                    ->addTA(['value' => 'test', 'class' => 'form-control'])
-                    ->get();
+    public function Form() {
+        return FormBuilder::form(['action' => 'test.php', 'method' => 'post'])
+                    ->input(['type' => 'file', 'name' => 'file' ,'class' => 'form-control'])
+                    ->select(['class' => 'form-control', 'name' => 'select'], [ 'key1'=>'ahmed', 'key2' => 'mohamed', 'key3' => 'abdo'])
+                    ->textarea([ 'name' => 'text','class' => 'form-control'])
+                    ->input(['type' => 'checkbox', 'name' => 'check' ,'value' => 'ahmed'])
+                    ->input(['type' => 'radio', 'name' => 'radio' ,'value' => 'ahmed'])
+                    ->html('<br>')
+                    ->input(['type' => 'submit', 'value' => 'Submit', 'class' => ' btn btn-primary mt-3'])
+                    ->endForm();
     }
 
    
