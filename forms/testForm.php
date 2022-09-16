@@ -1,15 +1,14 @@
 <?php
 namespace Forms;
 
-use Src\FormBuilder;
+use Src\Facade\FormBuilder;
 use Src\FormComponent;
+use Src\IFormBuilder;
 
-require_once ('src/Facade.php');
-require_once('src/FormComponent.php');
 
 class testForm extends FormComponent {
    
-    public function Form() {
+    public function Form() : IFormBuilder {
         return FormBuilder::form(['action' => 'test.php', 'method' => 'post'])
                     ->input(['type' => 'file', 'name' => 'file' ,'class' => 'form-control'])
                     ->select(['class' => 'form-control', 'name' => 'select'], [ 'key1'=>'ahmed', 'key2' => 'mohamed', 'key3' => 'abdo'])

@@ -2,7 +2,7 @@
 
 namespace Src;
 
-class Product{
+class Form{
     private array $form = [];
 
   

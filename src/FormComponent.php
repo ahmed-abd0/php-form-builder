@@ -72,5 +72,5 @@ abstract class FormComponent {
         return $this->Form()->get();
     }
 
-    abstract public function  Form();
+    abstract public function  Form() : IFormBuilder ;
 }

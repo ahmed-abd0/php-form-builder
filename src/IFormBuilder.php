@@ -9,7 +9,6 @@ public  function input(array $attrs);
 public  function textarea(array $attrs);
 public function label(array $attrs);
 public function select(array $attrs);
-public function html(string $value);
 public function endForm();
 public  function get();
 
