@@ -17,26 +17,30 @@ echo <<<eof
   <div class='container' style =' width:700px ;margin-top:100px ;'>
 eof;
 
-echo '<h3>Login</h3>';
+// echo '<h3>Login</h3>';
 
-    $login = Login::create();
-   
+//     $loginModel = ['username' => 'ahmed', 'password' => '123123'];
     
-    echo $login;
+//     echo Login::create();
+
+//     echo Login::create()->model($loginModel);
   
-    echo '<hr><br>';
-    echo '<h3>register</h3>';
+//     echo '<hr><br>';
+//     echo '<h3>register</h3>';
 
-    $register = Register::create();
+//     $registerModel = ['username'=>'ahmed', 'password' => '123123', 'confirm-password' => '123123'];
 
-    echo $register;
+//     echo Register::create();
+
+//     echo Register::create()->model($registerModel);
 
     echo '<h3>Form</h3>';
 
     echo testForm::create();
-    echo '<br> <h3>Model</h3>';
+   
+    echo '<hr> <br> <h3>Model</h3>';
 
-    $model = ['select' => 'key3' , 'text' => 'this textarea', 'check' => 'ahmed', 'radio' => 'ahmed'];
+    $model = ['select' => 'key3' , 'text' => 'this textarea', 'check' => ['ahmed','abdo'], 'radio' => 'ahmed'];
 
     echo testForm::create()->model($model, 'model.php');
 

@@ -9,6 +9,7 @@ return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'Src\\Decroators\\EndForm' => $baseDir . '/src/Decroators/EndForm.php',
     'Src\\Decroators\\FormStart' => $baseDir . '/src/Decroators/FormStart.php',
+    'Src\\Decroators\\Html' => $baseDir . '/src/Decroators/Html.php',
     'Src\\Decroators\\Input' => $baseDir . '/src/Decroators/Input.php',
     'Src\\Decroators\\Label' => $baseDir . '/src/Decroators/Label.php',
     'Src\\Decroators\\Select' => $baseDir . '/src/Decroators/Select.php',

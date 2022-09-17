@@ -4,6 +4,7 @@ namespace Src;
 
 use Src\Decroators\EndForm;
 use Src\Decroators\FormStart;
+use Src\Decroators\Html;
 use Src\Decroators\Input;
 use Src\Decroators\Label;
 use Src\Decroators\Select;
@@ -54,7 +55,7 @@ class FormBuilderClass implements IFormBuilder{
     }
 
     public function html($html){
-        $this->form->Add($html);
+        $this->form = (new Html($this->form))->add($html);
         return $this;
     }
     

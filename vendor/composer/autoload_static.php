@@ -24,6 +24,7 @@ class ComposerStaticInitdde4750ff755e3c7e3b25a83dc679b48
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Src\\Decroators\\EndForm' => __DIR__ . '/../..' . '/src/Decroators/EndForm.php',
         'Src\\Decroators\\FormStart' => __DIR__ . '/../..' . '/src/Decroators/FormStart.php',
+        'Src\\Decroators\\Html' => __DIR__ . '/../..' . '/src/Decroators/Html.php',
         'Src\\Decroators\\Input' => __DIR__ . '/../..' . '/src/Decroators/Input.php',
         'Src\\Decroators\\Label' => __DIR__ . '/../..' . '/src/Decroators/Label.php',
         'Src\\Decroators\\Select' => __DIR__ . '/../..' . '/src/Decroators/Select.php',
