@@ -2,15 +2,6 @@
 
 namespace Src;
 
-use Src\Elements\EndForm;
-use Src\Elements\FormStart;
-use Src\Elements\Html;
-use Src\Elements\Input;
-use Src\Elements\Label;
-use Src\Elements\Select;
-use Src\Elements\TextArea;
-
-
 class FormBuilderClass implements IFormBuilder{
     private Form $form ;
     public function __construct()
@@ -20,41 +11,45 @@ class FormBuilderClass implements IFormBuilder{
 
    
     public function form(array $attrs = []){
-        $this->form = (new FormStart($this->form))->add($attrs);
+        $this->form->Add('<form ')->setAttrs($attrs)->setEndTag();
         return $this;
     }
 
 
     public function input(array $attrs = []){
-        $this->form = (new Input($this->form))->add($attrs);
+        $this->form->Add('<input ')->setAttrs($attrs)->setEndTag();
         return $this;
     }
 
 
     public function textarea(array $attrs = []){
-        $this->form = (new TextArea($this->form))->add($attrs);
+        $this->form->Add("<textarea ")->setAttrs($attrs, "textarea")->setEndTag("textarea", $attrs["value"] ?? "");
         return $this;
     
     }
 
     public function select(array $attrs = [], array $options = []){
-        $this->form = (new Select($this->form))->add($attrs, $options);
+        $this->form->Add('<select ')
+                   ->setAttrs($attrs, "select")
+                   ->setEndTag()
+                   ->setSelectOptions($options, $attrs['value'] ?? '')
+                   ->setEndTag();
         return $this;
     }
 
     public function label(array $attrs = []){
-        $this->form = (new Label($this->form))->add($attrs);
+        $this->form->Add('<label ')->setAttrs($attrs, "label")->setEndTag("label", $attrs["value"]);
         return $this;
     }
 
    
     public function endForm(){
-        $this->form = $this->form->Add('</form>');
+        $this->form->Add('</form>');
         return $this;
     }
 
     public function html($html){
-        $this->form = (new Html($this->form))->add($html);
+        $this->form->Add($html);
         return $this;
     }
     
