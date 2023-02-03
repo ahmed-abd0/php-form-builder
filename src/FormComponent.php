@@ -13,6 +13,40 @@ abstract class FormComponent {
     }
 
    
+    public function model(array $model = [], $action = null){
+        
+        $form = str_get_html($this->Form()->get());
+          
+        if($action)
+          $form->find('form',0)->{'action'} = $action;
+  
+     
+        foreach($model as $name=>$value){
+            $input = $form->find("[name=$name]", 0);
+            $inputs = $form->find("input[name=$name]");
+            $checks = $form->find("input[name*=$name][type=checkbox]");
+
+            if($this->handelSingleInput($input, $value))
+                continue;
+          
+
+            if($inputs)
+                $this->handelInputs($inputs, $value);
+            
+
+            if($checks)
+                $this->handelChecks($checks, $value);
+
+
+          
+
+        }
+
+        return $form;
+        
+    }
+
+    
 
     private function handelInputs($inputs, $value){
 
@@ -30,54 +64,36 @@ abstract class FormComponent {
         }  
     }
 
-    public function model(array $model = [], $action = null){
+    private function handelChecks($checks, $value) {
+    
+      
+        foreach($checks as $check){
+            if(is_array($value) && in_array($check->value, $value)){
+                $check->{'checked'} = true;
+                continue;
+            }
+
+            if($check->value == $value)
+                $check->{'checked'} = true; 
+        }
+    }
+
+
+    private function handelSingleInput($input, $value) {
+        if(!$input)
+            return false;
         
-        $form = str_get_html($this->Form()->get());
-          
-        if($action)
-          $form->find('form',0)->{'action'} = $action;
-  
-     
-        foreach($model as $name=>$value){
-            $input = $form->find("[name=$name]", 0);
-            $inputs = $form->find("input[name=$name]");
-            $checks = $form->find("input[name*=$name][type=checkbox]");
-
-            if($input){
-                if($input->tag === 'select'){
-                    $input->find("option[value=$value]", 0)->{'selected'} = true;
-                    continue;
-                }
-
-                if($input->tag === 'textarea'){
-                    $input->innertext = $value;
-                    continue;
-                }
-            }
-          
-
-            if($inputs)
-                $this->handelInputs($inputs, $value);
-            
-            
-            if($checks){
-                foreach($checks as $check){
-                    if(is_array($value) && in_array($check->value, $value)){
-                        $check->{'checked'} = true;
-                        continue;
-                    }
-
-                    if($check->value == $value)
-                        $check->{'checked'} = true; 
-                }
-            }
-
-          
-
+        if($input->tag === 'select'){
+            $input->find("option[value=$value]", 0)->{'selected'} = true;
+            return true;
         }
 
-        return $form;
-        
+        if($input->tag === 'textarea'){
+            $input->innertext = $value;
+            return true;
+        }
+
+        return false;
     }
 
 

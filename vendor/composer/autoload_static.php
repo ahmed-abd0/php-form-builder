@@ -22,20 +22,6 @@ class ComposerStaticInitdde4750ff755e3c7e3b25a83dc679b48
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-        'Src\\Decroators\\EndForm' => __DIR__ . '/../..' . '/src/Decroators/EndForm.php',
-        'Src\\Decroators\\FormStart' => __DIR__ . '/../..' . '/src/Decroators/FormStart.php',
-        'Src\\Decroators\\Html' => __DIR__ . '/../..' . '/src/Decroators/Html.php',
-        'Src\\Decroators\\Input' => __DIR__ . '/../..' . '/src/Decroators/Input.php',
-        'Src\\Decroators\\Label' => __DIR__ . '/../..' . '/src/Decroators/Label.php',
-        'Src\\Decroators\\Select' => __DIR__ . '/../..' . '/src/Decroators/Select.php',
-        'Src\\Decroators\\Setter' => __DIR__ . '/../..' . '/src/Decroators/Setter.php',
-        'Src\\Decroators\\TextArea' => __DIR__ . '/../..' . '/src/Decroators/TextArea.php',
-        'Src\\Facade\\Facade' => __DIR__ . '/../..' . '/src/Facade/Facade.php',
-        'Src\\Facade\\FormBuilder' => __DIR__ . '/../..' . '/src/Facade/FormBuilder.php',
-        'Src\\Form' => __DIR__ . '/../..' . '/src/Form.php',
-        'Src\\FormBuilderClass' => __DIR__ . '/../..' . '/src/FormBuilderClass.php',
-        'Src\\FormComponent' => __DIR__ . '/../..' . '/src/FormComponent.php',
-        'Src\\IFormBuilder' => __DIR__ . '/../..' . '/src/IFormBuilder.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

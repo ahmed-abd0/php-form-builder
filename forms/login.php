@@ -8,7 +8,7 @@ use Src\IFormBuilder;
 
 class Login extends FormComponent {
    
-    public function Form() : IFormBuilder{
+    public function Form() : IFormBuilder {
         return  FormBuilder::form(['method' => 'post' , 'action' => 'login.php'])
                 ->label(['value' => 'User Name'])
                 ->input(['type' => 'text','id'=>'username','name' => 'username', 'class' => 'form-control','placeholder' => 'User Name'])

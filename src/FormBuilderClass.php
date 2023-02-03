@@ -2,13 +2,13 @@
 
 namespace Src;
 
-use Src\Decroators\EndForm;
-use Src\Decroators\FormStart;
-use Src\Decroators\Html;
-use Src\Decroators\Input;
-use Src\Decroators\Label;
-use Src\Decroators\Select;
-use Src\Decroators\TextArea;
+use Src\Elements\EndForm;
+use Src\Elements\FormStart;
+use Src\Elements\Html;
+use Src\Elements\Input;
+use Src\Elements\Label;
+use Src\Elements\Select;
+use Src\Elements\TextArea;
 
 
 class FormBuilderClass implements IFormBuilder{
@@ -28,7 +28,6 @@ class FormBuilderClass implements IFormBuilder{
     public function input(array $attrs = []){
         $this->form = (new Input($this->form))->add($attrs);
         return $this;
-        
     }
 
 
@@ -50,7 +49,7 @@ class FormBuilderClass implements IFormBuilder{
 
    
     public function endForm(){
-        $this->form = (new EndForm($this->form))->add();
+        $this->form = $this->form->Add('</form>');
         return $this;
     }
 
@@ -61,7 +60,7 @@ class FormBuilderClass implements IFormBuilder{
     
 
     public  function get(){
-        return $this->form->getProduct();
+        return $this->form->getForm();
     }
     
 }
